@@ -5,11 +5,14 @@
   "description": "Учебный проект «Менеджер задач» от HTML Academy",
   "scripts": {
     "eslint": "eslint src/**/*.js",
-    "test": "npm run eslint"
+    "test": "npm run eslint",
+    "start": "gulp start"
   },
   "devDependencies": {
     "eslint": "6.1.0",
-    "eslint-config-htmlacademy": "0.5.2"
+    "eslint-config-htmlacademy": "0.5.2",
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2"
   },
   "engines": {
     "node": "10"
