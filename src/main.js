@@ -1,5 +1,5 @@
 import {ESC_KEYCODE} from './constants.js';
-import {RenderPosition, render, replace} from './utils/render.js';
+import {RenderPosition, render, replace, remove} from './utils/render.js';
 import {tasks} from './mock/task.js';
 import {filters} from './mock/filter.js';
 import BoardComponent from './components/board.js';
@@ -34,14 +34,12 @@ const renderTask = (taskList, task) => {
   const taskComponent = new TaskComponent(task);
   const taskEditComponent = new TaskEditComponent(task);
 
-  const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
-  editButton.addEventListener(`click`, () => {
+  taskComponent.setEditButtonClickHandler(() => {
     replaceTaskToEdit();
     document.addEventListener(`keydown`, onEscPress);
   });
 
-  const editForm = taskEditComponent.getElement().querySelector(`form`);
-  editForm.addEventListener(`submit`, (evt) => {
+  taskEditComponent.setSubmitHandler((evt) => {
     evt.preventDefault();
     replaceEditToTask();
   });
@@ -77,7 +75,7 @@ if (isAllTasksArchived) {
   const loadMoreButtonComponent = new LoadMoreButtonComponent();
   render(boardComponent.getElement(), loadMoreButtonComponent, RenderPosition.BEFOREEND);
 
-  loadMoreButtonComponent.getElement().addEventListener(`click`, () => {
+  loadMoreButtonComponent.setClickHandler(() => {
     const prevTasksCount = showingTasksCount;
     showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
@@ -85,8 +83,7 @@ if (isAllTasksArchived) {
       .forEach((task) => renderTask(taskList, task));
 
     if (showingTasksCount >= tasks.length) {
-      loadMoreButtonComponent.getElement().remove();
-      loadMoreButtonComponent.removeElement();
+      remove(loadMoreButtonComponent);
     }
   });
 }
