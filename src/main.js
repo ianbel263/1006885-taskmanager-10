@@ -1,5 +1,5 @@
 import {ESC_KEYCODE} from './constants.js';
-import {render, RenderPosition} from './utils/render.js';
+import {RenderPosition, render, replace} from './utils/render.js';
 import {tasks} from './mock/task.js';
 import {filters} from './mock/filter.js';
 import BoardComponent from './components/board.js';
@@ -24,11 +24,11 @@ const renderTask = (taskList, task) => {
   };
 
   const replaceEditToTask = () => {
-    taskList.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+    replace(taskComponent, taskEditComponent);
   };
 
   const replaceTaskToEdit = () => {
-    taskList.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+    replace(taskEditComponent, taskComponent);
   };
 
   const taskComponent = new TaskComponent(task);
@@ -46,25 +46,25 @@ const renderTask = (taskList, task) => {
     replaceEditToTask();
   });
 
-  render(taskList, taskComponent.getElement(), RenderPosition.BEFOREEND);
+  render(taskList, taskComponent, RenderPosition.BEFOREEND);
 };
 
 const siteMainElement = document.querySelector(`.main`);
 const siteControlElement = siteMainElement.querySelector(`.main__control`);
 
-render(siteControlElement, new SiteMenuComponent().getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, new FilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
+render(siteControlElement, new SiteMenuComponent(), RenderPosition.BEFOREEND);
+render(siteMainElement, new FilterComponent(filters), RenderPosition.BEFOREEND);
 
 const boardComponent = new BoardComponent();
-render(siteMainElement, boardComponent.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, boardComponent, RenderPosition.BEFOREEND);
 
 const isAllTasksArchived = tasks.every((task) => task.isArchive);
 
 if (isAllTasksArchived) {
-  render(boardComponent.getElement(), new NoTasksComponent().getElement(), RenderPosition.BEFOREEND);
+  render(boardComponent.getElement(), new NoTasksComponent(), RenderPosition.BEFOREEND);
 } else {
-  render(boardComponent.getElement(), new SortComponent().getElement(), RenderPosition.BEFOREEND);
-  render(boardComponent.getElement(), new TasksContainerComponent().getElement(), RenderPosition.BEFOREEND);
+  render(boardComponent.getElement(), new SortComponent(), RenderPosition.BEFOREEND);
+  render(boardComponent.getElement(), new TasksContainerComponent(), RenderPosition.BEFOREEND);
 
   const taskList = boardComponent.getElement().querySelector(`.board__tasks`);
 
@@ -75,7 +75,7 @@ if (isAllTasksArchived) {
     });
 
   const loadMoreButtonComponent = new LoadMoreButtonComponent();
-  render(boardComponent.getElement(), loadMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
+  render(boardComponent.getElement(), loadMoreButtonComponent, RenderPosition.BEFOREEND);
 
   loadMoreButtonComponent.getElement().addEventListener(`click`, () => {
     const prevTasksCount = showingTasksCount;
