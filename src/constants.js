@@ -16,3 +16,5 @@ export const MONTH_NAMES = [
   `November`,
   `December`,
 ];
+
+export const ESC_KEYCODE = 27;
