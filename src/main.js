@@ -1,5 +1,5 @@
 import {ESC_KEYCODE} from './constants.js';
-import {render, RenderPosition} from './utils.js';
+import {render, RenderPosition} from './utils/render.js';
 import {tasks} from './mock/task.js';
 import {filters} from './mock/filter.js';
 import BoardComponent from './components/board.js';
