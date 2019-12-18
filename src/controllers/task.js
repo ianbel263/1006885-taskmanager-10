@@ -68,6 +68,8 @@ export default class TaskController {
   }
 
   _replaceEditToTask() {
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
+
     this._taskEditComponent.reset();
 
     replace(this._taskComponent, this._taskEditComponent);
