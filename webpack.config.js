@@ -1,5 +1,5 @@
 const path = require(`path`);
-const he = require('he');
+// const he = require('he');
 const MomentLocalesPlugin = require(`moment-locales-webpack-plugin`);
 
 module.exports = {
